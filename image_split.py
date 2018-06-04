@@ -36,7 +36,7 @@ def build_dataset(source_folder):
     
     random.seed(7)
     
-    label = 0
+    label = 1
     test_pairs_dataset = []
     train_dataset, valid_dataset, test_dataset = [], [], []
     
@@ -55,7 +55,8 @@ def build_dataset(source_folder):
         else:
             valid_dataset.extend(zip(people_images[0: 10], [label] * 10))
             train_dataset.extend(zip(people_images[10: 100], [label] * 90))
-            label += 1
+            
+        label += 1
     
     test_pairs_dataset = test_pairs_generate(test_dataset, each_k=5)
     

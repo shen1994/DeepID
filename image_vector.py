@@ -14,7 +14,7 @@ def image_to_vector(image_path):
         array_image = np.array(image, dtype="float32")
         return array_image
         
-def vector_counter(csv_path):
+def vector_counter(csv_path, size=20):
     
     csv_file = open(csv_path, "r")
     line = csv_file.readline()
@@ -23,11 +23,15 @@ def vector_counter(csv_path):
         counter += 1
         line = csv_file.readline()
     csv_file.close()
-    return counter
+    
+    if counter % size == 0:
+        return counter
+    else:
+        return int(counter / size + 1) * size 
         
 def save_to_vector(csv_path, pkl_path, size=20):
     
-    vector_number = vector_counter(csv_path)
+    vector_number = vector_counter(csv_path, size)
     
     csv_file = open(csv_path, "r")
     pkl_file = open(pkl_path, "wb")
@@ -63,8 +67,29 @@ def save_to_vector(csv_path, pkl_path, size=20):
         
     if counter != 0:
         
-        pickle.dump(np.asarray(x, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
-        pickle.dump(np.asarray(y, dtype="int32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+        if counter % size == 0:
+        
+            pickle.dump(np.asarray(x, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+            pickle.dump(np.asarray(y, dtype="int32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+            
+        else:
+            
+            csv_file.seek(0)
+            line = csv_file.readline()
+            line = line.replace(",", " ")
+            while line:
+                path, label = line.strip().split()
+                x.append(image_to_vector(path))
+                y.append(int(label))
+                counter += 1
+                
+                if counter == size:
+                    pickle.dump(np.asarray(x, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+                    pickle.dump(np.asarray(y, dtype="int32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+                    break
+                
+                line = csv_file.readline()
+                line = line.replace(",", " ") 
         
         print("save vector: " + str(counter) + "--->OK")
         
@@ -96,11 +121,11 @@ def load_vector(pkl_path, vector_number):
         
         return x, y
             
-    for _ in range(vector_number / size):
+    for _ in range(int(vector_number / size)):
         x.extend(list(pickle.load(pkl_file)))
         y.extend(list(pickle.load(pkl_file)))
     
-    remain_number = vector_number % size
+    remain_number = int(vector_number % size)
     if remain_number != 0:
         x.extend(list(pickle.load(pkl_file))[0: remain_number])
         y.extend(list(pickle.load(pkl_file))[0: remain_number])
@@ -111,10 +136,55 @@ def load_vector(pkl_path, vector_number):
     pkl_file.close()
     
     return x, y
+    
+def load_vector_from_index(pkl_path, batch_size, index, big_number, size, pkl_file):
+ 
+    x, y = [], []
+
+    if index == 0 or not pkl_file:
+        
+        pkl_file = open(pkl_path, "rb")
+        
+        big_number, size, v_number = pickle.load(pkl_file)       
+        if batch_size % size != 0:
+            batch_size = size * int(batch_size / size)    
+        index = index % big_number
+    
+    if (index + batch_size) >= big_number:
+        
+        for _ in range(int((big_number - index) / size)):
+            x.extend(list(pickle.load(pkl_file)))
+            y.extend(list(pickle.load(pkl_file)))
+            
+        pkl_file.seek(0)
+        
+        big_number, size, v_number = pickle.load(pkl_file)
+        if batch_size % size != 0: 
+            batch_size = size * int(batch_size / size)    
+        index = index % big_number
+        
+        for _ in range(int((index + batch_size - big_number) / size)):
+            x.extend(list(pickle.load(pkl_file)))
+            y.extend(list(pickle.load(pkl_file)))
+        
+    for _ in range(int(batch_size / size)):
+        x.extend(list(pickle.load(pkl_file)))
+        y.extend(list(pickle.load(pkl_file)))
+         
+    x = np.asarray(x, dtype="float32")
+    y = np.asarray(y, dtype="int32")
+         
+    return x, y, (index + batch_size), big_number, size, pkl_file
+    
+
+def safe_file_close(pkl_file):
+
+    if pkl_file:
+        pkl_file.close()
        
 def save_pair_to_vector(csv_path, pkl_path, size=20):
     
-    vector_number = vector_counter(csv_path)
+    vector_number = vector_counter(csv_path, size)
     
     csv_file = open(csv_path, "r")
     pkl_file = open(pkl_path, "wb")
@@ -152,9 +222,30 @@ def save_pair_to_vector(csv_path, pkl_path, size=20):
         
     if counter != 0:
         
-        pickle.dump(np.asarray(x_1, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
-        pickle.dump(np.asarray(x_2, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
-        pickle.dump(np.asarray(y, dtype="int32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+        if counter % size == 0:
+            pickle.dump(np.asarray(x_1, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+            pickle.dump(np.asarray(x_2, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+            pickle.dump(np.asarray(y, dtype="int32"), pkl_file, pickle.HIGHEST_PROTOCOL)   
+        else:
+            
+            csv_file.seek(0)
+            line = csv_file.readline()
+            line = line.replace(",", " ")
+            while line:
+                path_1, path_2, label = line.strip().split()
+                x_1.append(image_to_vector(path_1))
+                x_2.append(image_to_vector(path_2))
+                y.append(int(label))
+                counter += 1
+                
+                if counter == size:
+                    pickle.dump(np.asarray(x_1, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+                    pickle.dump(np.asarray(x_2, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
+                    pickle.dump(np.asarray(y, dtype="int32"), pkl_file, pickle.HIGHEST_PROTOCOL)   
+                    break
+                
+                line = csv_file.readline()
+                line = line.replace(",", " ")
         
         print("save vector: " + str(counter) + "--->OK")
         
@@ -189,12 +280,12 @@ def load_pair_vector(pkl_path, vector_number):
         
         return x_1, x_2, y
             
-    for _ in range(vector_number / size):
+    for _ in range(int(vector_number / size)):
         x_1.extend(list(pickle.load(pkl_file)))
         x_2.extend(list(pickle.load(pkl_file)))
         y.extend(list(pickle.load(pkl_file)))
     
-    remain_number = vector_number % size
+    remain_number = int(vector_number % size)
     if remain_number != 0:
         x_1.extend(list(pickle.load(pkl_file))[0: remain_number])
         x_2.extend(list(pickle.load(pkl_file))[0: remain_number])
@@ -212,11 +303,11 @@ def run():
     
     print("---------------------------------\n")
     print("write in train--->waiting\n")
-    save_to_vector("image/train_dataset.csv", "image/train_vector_dataset.pkl", size=100)
+    save_to_vector("image/train_dataset.csv", "image/train_vector_dataset.pkl", size=16)
     
     print("---------------------------------\n")
     print("write in valid--->waiting\n")
-    save_to_vector("image/valid_dataset.csv", "image/valid_vector_dataset.pkl", size=100)
+    save_to_vector("image/valid_dataset.csv", "image/valid_vector_dataset.pkl", size=16)
     
     print("---------------------------------\n")
     print("write in test--->waiting\n")
