@@ -2,11 +2,11 @@
 
 ## 0. 效果展示  
 > * 训练图(极小数据测试训练)  
-> * ![image](https://github.com/shen1994/README/raw/master/images/DeepID_train.jpg)  
+![image](https://github.com/shen1994/README/raw/master/images/DeepID_train.jpg)  
 > * 测试图  
-> * ![image](https://github.com/shen1994/README/raw/master/images/DeepID_test.jpg)  
+![image](https://github.com/shen1994/README/raw/master/images/DeepID_test.jpg)  
 > * 训练曲线  
-> * ![image](https://github.com/shen1994/README/raw/master/images/DeepID_curve.jpg)  
+![image](https://github.com/shen1994/README/raw/master/images/DeepID_curve.jpg)  
 
 ## 1. 数据地址及工具  
 > * 人脸数据下载地址: [ aligned_images_DB.tar.gz](http://www.cs.tau.ac.il/~wolf/ytfaces/)  
