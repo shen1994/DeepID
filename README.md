@@ -14,6 +14,8 @@
 > * 本项目测试图库: [密码: fa33 ](https://pan.baidu.com/s/1T9REvuxCZfG5rgaSz39vig)  
 
 ## 2. 执行指令  
+> * 防止数据不均衡，小于100张的用于测试，不足600的做数据扩充  
+`python image_augmentation.py`  
 > * 将原图剪裁，剪裁成（47 * 55）大小的图片，原图是人脸对齐的  
 `python image_crop.py`
 > * 将图库进行划分，保存各分块的本地地址，存储为csv文件  
