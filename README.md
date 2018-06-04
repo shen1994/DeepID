@@ -27,5 +27,4 @@
 
 ## 3. 参考链接  
 > * [GITHUB代码库](https://github.com/jinze1994/DeepID1)
-> * [简易讲解](http://www.cslab.openu.ac.il/)  
 > * [DeepID论文](https://www.cv-foundation.org/openaccess/content_cvpr_2014/papers/Sun_Deep_Learning_Face_2014_CVPR_paper.pdf)  
