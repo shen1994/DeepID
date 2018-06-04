@@ -22,6 +22,10 @@
 `python image_vector.py`  
 > * 训练数据  
 `python train.py`  
+> * 在命令行输入,启动tensorboard观测曲线
+`tensorboard --logdir=log`  
+> * 在浏览器中输入,显示曲线  
+`http://localhost:6006/#scalars`  
 > * 测试数据  
 `python test.py`  
 
