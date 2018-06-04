@@ -16,7 +16,7 @@ from model import deepid_1
 
 def run():
     
-    epocs = 1001
+    epocs = 5001
     batch_size = 32
     
     log_dir = "log"

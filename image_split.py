@@ -34,8 +34,6 @@ def test_pairs_generate(test_images_list, each_k=5):
 
 def build_dataset(source_folder):
     
-    random.seed(7)
-    
     label = 1
     test_pairs_dataset = []
     train_dataset, valid_dataset, test_dataset = [], [], []
@@ -53,8 +51,8 @@ def build_dataset(source_folder):
         if len(people_images) < 100:
             test_dataset.append(people_images)
         else:
-            valid_dataset.extend(zip(people_images[0: 10], [label] * 10))
-            train_dataset.extend(zip(people_images[10: 100], [label] * 90))
+            valid_dataset.extend(zip(people_images[0: 50], [label] * 10))
+            train_dataset.extend(zip(people_images[50: 600], [label] * 550))
             
         label += 1
     
@@ -73,6 +71,8 @@ def save_to_csv(dataset, file_name):
             f.write(",".join(map(str, item)) + "\n")
             
 def run():
+    
+    random.seed(7)
     
     train_dataset, valid_dataset, test_dataset = build_dataset("image\\result")
     train_dataset_path = "image\\train_dataset.csv"

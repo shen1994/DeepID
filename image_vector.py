@@ -14,7 +14,7 @@ def image_to_vector(image_path):
         array_image = np.array(image, dtype="float32")
         return array_image
         
-def vector_counter(csv_path, size=20):
+def vector_counter(csv_path, size):
     
     csv_file = open(csv_path, "r")
     line = csv_file.readline()
@@ -29,7 +29,7 @@ def vector_counter(csv_path, size=20):
     else:
         return int(counter / size + 1) * size 
         
-def save_to_vector(csv_path, pkl_path, size=20):
+def save_to_vector(csv_path, pkl_path, size=16):
     
     vector_number = vector_counter(csv_path, size)
     
@@ -182,7 +182,7 @@ def safe_file_close(pkl_file):
     if pkl_file:
         pkl_file.close()
        
-def save_pair_to_vector(csv_path, pkl_path, size=20):
+def save_pair_to_vector(csv_path, pkl_path, size=16):
     
     vector_number = vector_counter(csv_path, size)
     
@@ -303,11 +303,11 @@ def run():
     
     print("---------------------------------\n")
     print("write in train--->waiting\n")
-    save_to_vector("image/train_dataset.csv", "image/train_vector_dataset.pkl", size=16)
+    save_to_vector("image/train_dataset.csv", "image/train_vector_dataset.pkl", size=32)
     
     print("---------------------------------\n")
     print("write in valid--->waiting\n")
-    save_to_vector("image/valid_dataset.csv", "image/valid_vector_dataset.pkl", size=16)
+    save_to_vector("image/valid_dataset.csv", "image/valid_vector_dataset.pkl", size=32)
     
     print("---------------------------------\n")
     print("write in test--->waiting\n")
