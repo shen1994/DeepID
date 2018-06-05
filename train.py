@@ -16,8 +16,8 @@ from model import deepid_1
 
 def run():
     
-    epocs = 5001
-    batch_size = 32
+    epocs = 100001
+    batch_size = 256
     
     log_dir = "log"
     if tf.gfile.Exists(log_dir):
@@ -88,7 +88,7 @@ def run():
                 print(str(step) + ": valid --->" + "cost:" + str(v_cost) + ", accuracy:" + str(v_acc))
                 print("----------------------------------------")
                 
-            if step % 1000 == 0 and step != 0:
+            if step % 10000 == 0 and step != 0:
                 saver.save(sess, 'model/deepid%d.ckpt' % step)
                 
             step += 1
