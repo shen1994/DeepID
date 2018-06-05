@@ -258,8 +258,8 @@ def save_pair_to_vector(csv_path, pkl_path, size=16):
                 line = line.replace(",", " ")
         
         print("save vector:" + " vectors number" + "--->" + str(vector_number) 
-                + "vectors counter" + "--->" + str(vectors_counter) 
-                + "block size" + "--->" + str(counter))
+                + " vectors counter" + "--->" + str(vectors_counter) 
+                + " block size" + "--->" + str(counter))
         
     csv_file.close()
     pkl_file.close()
