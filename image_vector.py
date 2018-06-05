@@ -155,6 +155,17 @@ def load_vector_from_index(pkl_path, batch_size, index, big_number, size, pkl_fi
         if batch_size % size != 0:
             batch_size = size * int(batch_size / size)    
         index = index % big_number
+        
+    if batch_size >= big_number:
+        
+        batch_size = big_number / batch_size
+        x.extend(list(pickle.load(pkl_file)))
+        y.extend(list(pickle.load(pkl_file)))
+            
+        pkl_file.seek(0)
+        
+        big_number, size, v_number = pickle.load(pkl_file)
+        index = 0
     
     if (index + batch_size) >= big_number:
         
@@ -258,8 +269,8 @@ def save_pair_to_vector(csv_path, pkl_path, size=16):
                 line = line.replace(",", " ")
         
         print("save vector:" + " vectors number" + "--->" + str(vector_number) 
-                + " vectors counter" + "--->" + str(vectors_counter) 
-                + " block size" + "--->" + str(counter))
+                + "vectors counter" + "--->" + str(vectors_counter) 
+                + "block size" + "--->" + str(counter))
         
     csv_file.close()
     pkl_file.close()
