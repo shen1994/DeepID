@@ -10,6 +10,8 @@
 
 ## 1. 数据地址及工具  
 > * 人脸数据下载地址: [ aligned_images_DB.tar.gz](http://www.cs.tau.ac.il/~wolf/ytfaces/)  
+> * 人脸数据私人下载地址: [patch1, 密码: mor2](https://pan.baidu.com/s/18p9wnxLBmMMsNcDoH1M2Pg)   
+> * 人脸数据私人下载地址: [patch2, 密码: 4eni](https://pan.baidu.com/s/1dl1VIlyzbG6BjC1SVTZXZw)   
 > * 有账号密码下载地址: [用户名: wolftau, 密码: wtal997](http://www.cslab.openu.ac.il/personal/Hassner/wolftau/)  
 > * 本项目测试图库: [密码: fa33 ](https://pan.baidu.com/s/1T9REvuxCZfG5rgaSz39vig)  
 
