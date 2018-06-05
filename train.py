@@ -62,7 +62,7 @@ def run():
             
             _ = sess.run(optimizer, {x: train_x, y: train_onehot_y})
             
-            if step % 100 == 0:
+            if step % 1000 == 0:
                 
                 # train
                 summary = sess.run(merged, {x: train_x, y: train_onehot_y})
