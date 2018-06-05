@@ -7,6 +7,7 @@ Created on Fri Jun  1 21:26:31 2018
 
 import os
 import random
+import pickle
 
 def test_pairs_generate(test_images_list, each_k=5):
     
@@ -31,6 +32,20 @@ def test_pairs_generate(test_images_list, each_k=5):
             test_pairs_list.append((diff_one, diff_another, 0))
             
     return test_pairs_list
+    
+def save_to_pkl(path, v1, v2):
+    
+    pkl_file = open(path, "wb")
+    pickle.dump((v1, v2), pkl_file, pickle.HIGHEST_PROTOCOL)
+    pkl_file.close()
+    
+def load_train_test_number(path):
+    
+    pkl_file = open(path, "rb")
+    train_counter, test_pair_counter = pickle.load(pkl_file)   
+    pkl_file.close()
+    
+    return train_counter, test_pair_counter
 
 def build_dataset(source_folder):
     
@@ -39,6 +54,9 @@ def build_dataset(source_folder):
     train_dataset, valid_dataset, test_dataset = [], [], []
 
     counter = 0
+    
+    test_pair_counter = 0
+    train_counter = 0
     
     for people_folder in os.listdir(source_folder):
         people_images = []
@@ -52,15 +70,18 @@ def build_dataset(source_folder):
         
         if len(people_images) < 100:
             test_dataset.append(people_images)
+            test_pair_counter += 1
         else:
             valid_dataset.extend(zip(people_images[0: 50], [label] * 10))
             train_dataset.extend(zip(people_images[50: 600], [label] * 550))
-            
             label += 1
-            
+            train_counter += 1
+             
         print(people_folder + ": id--->" + str(counter))
         
         counter += 1
+        
+    save_to_pkl("image/train_test_number.pkl", train_counter, test_pair_counter)
     
     test_pairs_dataset = test_pairs_generate(test_dataset, each_k=5)
     

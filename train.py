@@ -12,6 +12,7 @@ from image_vector import load_vector
 from image_vector import load_pair_vector
 from image_vector import load_vector_from_index
 from image_vector import safe_file_close
+from image_split import load_train_test_number
 from model import deepid_1
 
 def run():
@@ -29,8 +30,8 @@ def run():
         tf.gfile.DeleteRecursively(model_dir)
     tf.gfile.MakeDirs(model_dir)
     
-    class_num = len(os.listdir("image/origin")) + 1
-
+    train_samples_number, _ = load_train_test_number("image/train_test_number.pkl")
+    class_num = train_samples_number + 1
 
     with tf.name_scope('input'):
         x = tf.placeholder(tf.float32, [None, 55, 47, 3], name='x')
