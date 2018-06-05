@@ -37,6 +37,7 @@ def save_to_vector(csv_path, pkl_path, size=16):
     pkl_file = open(pkl_path, "wb")
     
     counter = 0
+    vectors_counter =0
     x, y = [], []
 
     pickle.dump((vector_number, size, 2), pkl_file, pickle.HIGHEST_PROTOCOL)
@@ -51,13 +52,16 @@ def save_to_vector(csv_path, pkl_path, size=16):
         x.append(image_to_vector(path))
         y.append(int(label))
         counter += 1
+        vectors_counter +=1
         
         if counter == size:
               
             pickle.dump(np.asarray(x, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
             pickle.dump(np.asarray(y, dtype="int32"), pkl_file, pickle.HIGHEST_PROTOCOL)
             
-            print("save vector: " + str(counter) + "--->OK")
+            print("save vector:" + " vectors number" + "--->" + str(vector_number) 
+                    + " vectors counter" + "--->" + str(vectors_counter) 
+                    + " block size" + "--->" + str(counter))
             
             counter = 0
             x, y = [], []
@@ -91,7 +95,9 @@ def save_to_vector(csv_path, pkl_path, size=16):
                 line = csv_file.readline()
                 line = line.replace(",", " ") 
         
-        print("save vector: " + str(counter) + "--->OK")
+        print("save vector:" + " vectors number" + "--->" + str(vector_number)
+                + " vectors counter" + "--->" + str(vectors_counter) 
+                + " block size" + "--->" + str(counter))
         
     csv_file.close()
     pkl_file.close()
@@ -190,6 +196,7 @@ def save_pair_to_vector(csv_path, pkl_path, size=16):
     pkl_file = open(pkl_path, "wb")
     
     counter = 0
+    vectors_counter = 0
     x_1, x_2, y = [], [], []
 
     pickle.dump((vector_number, size, 3), pkl_file, pickle.HIGHEST_PROTOCOL)
@@ -205,6 +212,7 @@ def save_pair_to_vector(csv_path, pkl_path, size=16):
         x_2.append(image_to_vector(path_2))
         y.append(int(label))
         counter += 1
+        vectors_counter += 1
         
         if counter == size:
               
@@ -212,7 +220,9 @@ def save_pair_to_vector(csv_path, pkl_path, size=16):
             pickle.dump(np.asarray(x_2, dtype="float32"), pkl_file, pickle.HIGHEST_PROTOCOL)
             pickle.dump(np.asarray(y, dtype="int32"), pkl_file, pickle.HIGHEST_PROTOCOL)
             
-            print("save vector: " + str(counter) + "--->OK")
+            print("save vector:" + " vectors number" + "--->" + str(vector_number) 
+                    + " vectors counter" + "--->" + str(vectors_counter) 
+                    + " block size" + "--->" + str(counter))
             
             counter = 0
             x_1, x_2, y = [], [], []
@@ -247,7 +257,9 @@ def save_pair_to_vector(csv_path, pkl_path, size=16):
                 line = csv_file.readline()
                 line = line.replace(",", " ")
         
-        print("save vector: " + str(counter) + "--->OK")
+        print("save vector:" + " vectors number" + "--->" + str(vector_number) 
+                + "vectors counter" + "--->" + str(vectors_counter) 
+                + "block size" + "--->" + str(counter))
         
     csv_file.close()
     pkl_file.close()
@@ -311,7 +323,7 @@ def run():
     
     print("---------------------------------\n")
     print("write in test--->waiting\n")
-    save_pair_to_vector("image/test_dataset.csv", "image/test_vector_dataset.pkl", size=3)
+    save_pair_to_vector("image/test_dataset.csv", "image/test_vector_dataset.pkl", size=32)
     
     print("---------------------------------\n")
     print("write in all--->OK\n")

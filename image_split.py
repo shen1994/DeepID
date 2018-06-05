@@ -37,6 +37,8 @@ def build_dataset(source_folder):
     label = 1
     test_pairs_dataset = []
     train_dataset, valid_dataset, test_dataset = [], [], []
+
+    counter = 0
     
     for people_folder in os.listdir(source_folder):
         people_images = []
@@ -54,7 +56,11 @@ def build_dataset(source_folder):
             valid_dataset.extend(zip(people_images[0: 50], [label] * 10))
             train_dataset.extend(zip(people_images[50: 600], [label] * 550))
             
-        label += 1
+            label += 1
+            
+        print(people_folder + ": id--->" + str(counter))
+        
+        counter += 1
     
     test_pairs_dataset = test_pairs_generate(test_dataset, each_k=5)
     
