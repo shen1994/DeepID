@@ -15,7 +15,8 @@
 > * 人脸数据私人下载地址: [patch1, 密码: mor2](https://pan.baidu.com/s/18p9wnxLBmMMsNcDoH1M2Pg)   
 > * 人脸数据私人下载地址: [patch2, 密码: 4eni](https://pan.baidu.com/s/1dl1VIlyzbG6BjC1SVTZXZw)   
 > * 有账号密码下载地址: [用户名: wolftau, 密码: wtal997](http://www.cslab.openu.ac.il/personal/Hassner/wolftau/)  
-> * 本项目测试图库: [密码: fa33 ](https://pan.baidu.com/s/1T9REvuxCZfG5rgaSz39vig)  
+> * 本项目测试图库: [密码: fa33](https://pan.baidu.com/s/1T9REvuxCZfG5rgaSz39vig)  
+> * 已训练完的模型: [密码: dnla](https://pan.baidu.com/s/1m_587kj39tdFA2oXYts5GQ)  
 
 ## 2. 执行指令  
 > * 防止数据不均衡，小于100张的用于测试，不足600的做数据扩充  
