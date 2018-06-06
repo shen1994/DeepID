@@ -17,7 +17,7 @@ def cosine(a, b):
     
     return (1 - cos)
 
-def run(threshold=0.05):
+def run(threshold=0.43):
     
     ckpt = tf.train.latest_checkpoint('model')
     saver = tf.train.import_meta_graph(ckpt + '.meta')
