@@ -59,9 +59,9 @@ def deepid_1(input_x, output_y, class_num=None):
         tf.summary.scalar('accuracy', accuracy)
     
     with tf.name_scope('optimizer'):
-        o_learning_rate = 1e-2
+        o_learning_rate = 1e-3
         global_step = tf.Variable(0)
-        learning_rate = tf.train.exponential_decay(o_learning_rate, global_step, 30000, 0.1, staircase=True)		
+        learning_rate = tf.train.exponential_decay(o_learning_rate, global_step, 40000, 0.1, staircase=True)		
         optimizer = tf.train.AdamOptimizer(learning_rate).minimize(loss)
         
     merged = tf.summary.merge_all()
